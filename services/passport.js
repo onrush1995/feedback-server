@@ -6,6 +6,14 @@ const keys = require('../config/keys');
 // two arguments to fetch data, one argument to load data
 const User = mongoose.model('users');
 
+// 'user' is what is pulled out of db in passport.use
+passport.serializeUser((user, done) => {
+	//user.id is the identifying information
+	// the id assigned by mongo (internal id)
+	//it is not the profile.id (that is googleid)
+	done(null, user.id);
+});
+
 passport.use(
 	new GoogleStrategy(
 		{
