@@ -15,16 +15,21 @@ passport.use(
 		},
 		(accessToken, refreshToken, profile, done) => {
 			//search over all records in collection
-			//returns a promise
-			User.findOne({ googleId: profile.id }).then((existingUser) => {
-				if (existingUser) {
-					// we already have this record
-					// do nothing
-				} else {
-					// we dont have this record, create one
-					new User({ googleId: profile.id }).save();
-				}
-			});
+			User.findOne({ googleId: profile.id })
+				//uses a promise (then)
+				.then((existingUser) => {
+					if (existingUser) {
+						// we already have this record
+						// null - no errors, return user that was found
+						done(null, existingUser);
+					} else {
+						// we dont have this record, create one
+						new User({ googleId: profile.id })
+							.save()
+							// wait for user to create, then.. return done with created user
+							.then((user) => done(null, user));
+					}
+				});
 		}
 	)
 );
