@@ -10,6 +10,12 @@ module.exports = (app) => {
 
 	app.get('/auth/google/callback', passport.authenticate('google'));
 
+	// kills the cookie holding user identity
+	app.get('/api/logout', (req, res) => {
+		req.logout();
+		res.send(req.user);
+	});
+
 	//inspect req.user and test auth
 	//visit api/current user, should see user details
 	app.get('/api/current_user', (req, res) => {
