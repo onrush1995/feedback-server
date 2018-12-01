@@ -34,13 +34,12 @@ passport.use(
 			if (existingUser) {
 				// we already have this record
 				// null - no errors, return user that was found
-				done(null, existingUser);
-			} else {
-				// we dont have this record, create one
-				const user = await new User({ googleId: profile.id }).save();
-				// wait for user to create, then.. return done with created user
-				done(null, user);
+				return done(null, existingUser);
 			}
+			// we dont have this record, create one
+			const user = await new User({ googleId: profile.id }).save();
+			// wait for user to create, then.. return done with created user
+			done(null, user);
 		}
 	)
 );
