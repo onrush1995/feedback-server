@@ -13,7 +13,9 @@ const surveySchema = new Schema({
 	no: { type: Number, default: 0 },
 	// connect survey to a particular user
 	// underscore makes it obv its setting up a relationship
-	_user: { type: Schema.Types.ObjectId, ref: 'User' }
+	_user: { type: Schema.Types.ObjectId, ref: 'User' },
+	dateSent: Date,
+	lastResponded: Date
 });
 
 mongoose.model('surveys', surveySchema);
