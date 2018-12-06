@@ -7,7 +7,8 @@ require('./models/User'); // require models before passport
 require('./models/Survey');
 require('./services/passport');
 
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 
