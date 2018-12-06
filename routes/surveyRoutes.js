@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
+const Mailer = require('../services/Mailer');
 
 const Survey = mongoose.model('surveys');
 
@@ -20,5 +21,8 @@ module.exports = (app) => {
 			_user: req.user.id,
 			dateSent: Date.now()
 		});
+
+		// send email
+		const mailer = new Mailer(survey, teamplate);
 	});
 };
